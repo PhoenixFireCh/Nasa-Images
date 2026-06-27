@@ -1,13 +1,22 @@
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
 }
 
-body {
+#root {
+  height: 100%;
+}
+
+.background {
   background-color: rgb(236, 235, 242);
   background-image: url("./space.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
 }
 
 h1, h2, p {
@@ -17,43 +26,62 @@ h1, h2, p {
   width: 90%;
   color: rgb(209 209 209);
 }
-
-#root {
-  height: 100%;
-}
-
 .App {
   display: flex;
   height: 100%;
+  width: 100%;
   align-items: center;
+  position: absolute;
   justify-content: space-between;
 }
 
 .container {
   background-color: rgb(35 35 44);
+  position: fixed;
   display: flex;
 }
 
 .banListContainer {
-  height: 80%;
+  flex-direction: column;
+  height: 80dvh;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  width: 15%;
+  width: 15dvw;
+}
+
+.banList {
+  flex-wrap: wrap;
+  display: flex;
+  padding: 5px;
+  gap: 5px;
 }
 
 .historyContainer {
-  width: 20%;
-  height: 100%;
+  width: 20dvw;
+  height: 100dvh;
 }
 
+.historyBoundary {
+  height: 100dvh;
+  width: 20dvw;
+}
+
+.banListBoundary {
+  height: 80dvh;
+  width: 15dvw;
+}
 
 .interactable {
+  position: unset;
   flex-direction: column;
   align-items: center;
   width: 60%;
   height: fit-content;
   border-radius: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
+
 
 .attributeButtons {
   padding: 5px;
@@ -71,6 +99,12 @@ input {
   border-radius: 10px;
   background-color: rgb(74 149 185);
   color: rgb(255, 255, 255);
+  transition: ease 0.3s;
+}
+
+input:hover {
+  scale: 1.1;
+  background-color: rgb(52, 102, 125);
 }
 
 .descriptionH2 {
@@ -98,6 +132,7 @@ form {
 
 
 img {
+  border-radius: 20px;
   width: 90%;
   height: fit-content;
   object-fit: contain;
@@ -134,3 +169,9 @@ img {
 
 }
 
+.attributesList {
+  display: flex;
+  gap: 5px;
+  padding: 2px;
+  align-items: center;
+}
