@@ -57,6 +57,7 @@ h1, h2, p {
 }
 
 .historyContainer {
+  flex-direction: column;
   width: 20dvw;
   height: 100dvh;
 }
@@ -64,6 +65,18 @@ h1, h2, p {
 .historyBoundary {
   height: 100dvh;
   width: 20dvw;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-color: rgb(191, 194, 218) rgba(255, 166, 0, 0);
+  scrollbar-width: thin;
+  align-items: center;
+  gap: 3px;
+  scrollbar-color: rgb(0, 0, 0, 0);
 }
 
 .banListBoundary {
@@ -131,7 +144,7 @@ form {
 }
 
 
-img {
+.interactable img {
   border-radius: 20px;
   width: 90%;
   height: fit-content;

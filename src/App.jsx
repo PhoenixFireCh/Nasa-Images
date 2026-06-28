@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Attribute from './component/Attribute';
+import PastItem from './component/PastItem';
 const ACCESS_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
     ["Telescope", "Illustration", "Research", "Experiment"] //CELESTIAL OBJECTS
   ]
 
+
+  const [history, setHistory] = useState([]);
   const [currImage, setCurrImage] = useState("none");
   const [currAttributes, setAttributes] = useState([]);
   const [currDesc, setCurrDesc] = useState("");
@@ -49,23 +52,25 @@ function App() {
     let str = [...keywords].join(", ");
     setAttributes([...keywords]);
     const query = `https://images-api.nasa.gov/search?keywords=${str}&media_type=image`
-    callAPI(query);
+    callAPI(query, [...keywords]);
   }
 
-  const callAPI = async (q) => {
+  const callAPI = async (q, k) => {
     const response = await fetch(q);
     const json = await response.json();
     if (json == null) {
       alert("Oops! Something went wrong with that query, let's try again!")
     } else {
-      setCurrentImage(json);
+      setCurrentImage(json, k);
     }
   }
 
-  const setCurrentImage = (j) => {
+  const setCurrentImage = (j, k) => {
     const randIndex = Math.floor(Math.random() * j.collection.items.length);
-    setCurrImage(j.collection.items[randIndex].links[0].href)
+    const img = j.collection.items[randIndex].links[0].href;
+    setCurrImage(img)
     setCurrDesc(j.collection.items[randIndex].data[0].description);
+    setHistory((prev) => [...prev, {img: img, keywords: k}]);
   }
 
   const prepQuery = () => {
@@ -141,7 +146,9 @@ function App() {
               History
             </h2>
             <div className='history'>
-
+                {history && history.map((o) => {
+                  return <PastItem key={o} img={o.img} keywords={o.keywords}/>;
+                })}
             </div>
           </div>
         </div>
