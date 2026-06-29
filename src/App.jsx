@@ -49,6 +49,11 @@ function App() {
   const newQuery = (e) => {
     if (e != null) {e.preventDefault();}
     const keywords = prepQuery();
+
+    if (keywords.length == 0) {
+      alert("OOps, you might have selected all possible combinations of attributes into the banlist");
+    }
+
     let str = [...keywords].join(", ");
     setAttributes([...keywords]);
     const query = `https://images-api.nasa.gov/search?keywords=${str}&media_type=image`
