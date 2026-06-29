@@ -59,11 +59,10 @@ function App() {
     const query = `https://images-api.nasa.gov/search?keywords=${str}&media_type=image`
     callAPI(query, [...keywords]);
   }
-
   const callAPI = async (q, k) => {
     const response = await fetch(q);
     const json = await response.json();
-    if (json == null) {
+    if (json == null || json.collection.items.length === 0) {
       alert("Oops! Something went wrong with that query, let's try again!")
     } else {
       setCurrentImage(json, k);
@@ -73,9 +72,25 @@ function App() {
   const setCurrentImage = (j, k) => {
     const randIndex = Math.floor(Math.random() * j.collection.items.length);
     const img = j.collection.items[randIndex].links[0].href;
-    setCurrImage(img)
-    setCurrDesc(j.collection.items[randIndex].data[0].description);
-    setHistory((prev) => [...prev, {img: img, keywords: k}]);
+    if (!containsBannedAttribute(j.collection.items[randIndex].data[0].keywords)) {
+      setCurrImage(img)
+      setCurrDesc(j.collection.items[randIndex].data[0].description);
+      setHistory((prev) => [...prev, {img: img, keywords: k}]);
+    } else {
+      newQuery();
+    }
+  }
+
+  // True if contains banned attribute
+  const containsBannedAttribute = (item) => { // Hotfix. Costs a bit more time and tokens considering we are checking banned word in query but what can I say ¯\_(ツ)_/¯
+    for (const value of item) { // Hard check as nasa uses different keywords.
+      for (const bannedValue of banned) {
+        if (value.includes(bannedValue)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   const prepQuery = () => {
@@ -136,7 +151,7 @@ function App() {
             <form onSubmit={newQuery}>
               <div className='attributesList'>
                 {currAttributes && currAttributes.map((o) => {
-                  return <Attribute key={o} label={o} click={banItem} />;
+                  return <Attribute key={o + new Date().toISOString()} label={o} click={banItem} />;
                 })}
               </div>
               <input type='submit' value="Roll Another"></input>
@@ -152,7 +167,7 @@ function App() {
             </h2>
             <div className='history'>
                 {history && history.map((o) => {
-                  return <PastItem key={o} img={o.img} keywords={o.keywords}/>;
+                  return <PastItem key={o.img + new Date().toISOString()} img={o.img} keywords={o.keywords}/>;
                 })}
             </div>
           </div>

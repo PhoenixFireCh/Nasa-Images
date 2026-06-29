@@ -8,7 +8,7 @@ const PastItem = ({img, keywords}) => {
         <img src={img}/>
         <div className='pastKeywordsContainer'>
             {keywords && keywords.map((o) => {
-                return <p>{o}</p>;
+                return <p key={o + new Date().toISOString()}>{o}</p>;
             })}
         </div>
     </div>
