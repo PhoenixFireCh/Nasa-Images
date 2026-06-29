@@ -41,7 +41,7 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories: https://imgur.com/a/ukPUJp9
+Here's a walkthrough of implemented user stories: https://imgur.com/a/pZ4ioc6
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ScreenToGif

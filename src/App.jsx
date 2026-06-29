@@ -82,8 +82,10 @@ function App() {
   }
 
   // True if contains banned attribute
-  const containsBannedAttribute = (item) => { // Hotfix. Costs a bit more time and tokens considering we are checking banned word in query but what can I say ¯\_(ツ)_/¯
-    for (const value of item) { // Hard check as nasa uses different keywords.
+  // Hotfix. Costs a bit more time and tokens considering we are 
+  // checking banned word in query and I have limited time but what can I say ¯\_(ツ)_/¯
+  const containsBannedAttribute = (item) => { 
+    for (const value of item) { // Hard check as nasa uses slightly different keywords.
       for (const bannedValue of banned) {
         if (value.includes(bannedValue)) {
           return true;
